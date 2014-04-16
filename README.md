@@ -151,7 +151,13 @@ Go to [http://localhost:8080/configure](http://localhost:8080/configure)
 You can keep the default values for all other entries.
 
 ### Master and slave node configuration
-Go to [http://localhost:8080/computer](http://localhost:8080/computer) and add new slave called `master-build` with the labels `update_tarballs prio_build regular_build prio_nongraphics_test regular_nongraphics_test`.
+Go to [http://localhost:8080/computer](http://localhost:8080/computer) 
+- add new slave called `master-build` as `Dumb Slave`
+
+- set the `# of executors` to `1`
+- set `Remote FS root` to `/home/jenkins`
+- set the `Labels` to `update_tarballs prio_build regular_build prio_nongraphics_test regular_nongraphics_test`
+- set `Host` to `localhost`
 
 ### Jenkins plugin installation
 Go to [http://localhost:8080/pluginManager/available](http://localhost:8080/pluginManager/available) and install the following plugins:
@@ -275,7 +281,7 @@ Login as `admin` and create a new view by pressing the '+'.
 
 ![Create View](pictures/new_view.png "Create a new view in Jenkins")
 
-Name it `current\_user` and select **List View**. **Add Job Filter** in the *Job Filter* section and select **User Permissions for Jobs**. Configure as shown in the picture and press OK.
+Name it `current_user` and select **List View**. **Add Job Filter** in the *Job Filter* section and select **User Permissions for Jobs**. Configure as shown in the picture and press OK.
 
 ![Job Filter configuration](pictures/job_filter.png "Configuration example for View Job Filter")
 
