@@ -182,7 +182,8 @@ Add the following line to `/etc/fstab`
     # pbuilder
     tmpfs   /var/cache/pbuilder/build   tmpfs   defaults,size=3200M    0   0
     
-(The size should be arround 50% of the machines memory)
+*(This size should be arround __50%__ of the machines memory)*.
+
 Mount *tmpfs* by entering
 
     sudo mount -a
