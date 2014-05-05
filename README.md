@@ -180,8 +180,9 @@ Using RAM for chroot environment and parallel compression.
 Add the following line to `/etc/fstab`
 
     # pbuilder
-    tmpfs   /var/cache/pbuilder/build   tmpfs   defaults,size=32000M    0   0
-
+    tmpfs   /var/cache/pbuilder/build   tmpfs   defaults,size=3200M    0   0
+    
+(The size should be arround 50% of the machines memory)
 Mount *tmpfs* by entering
 
     sudo mount -a
