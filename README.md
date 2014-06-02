@@ -151,10 +151,13 @@ Go to [http://localhost:8080/configure](http://localhost:8080/configure)
 You can keep the default values for all other entries.
 
 ### Master and slave node configuration
-Go to [http://localhost:8080/computer](http://localhost:8080/computer) and add new slave called `master-build`.
-- Use `/home/jenkins` as Remote FS root.
-- Enter the labels `update_tarballs prio_build regular_build prio_nongraphics_test regular_nongraphics_test`. 
-- Add `localhost` as Host.
+Go to [http://localhost:8080/computer](http://localhost:8080/computer) 
+- add new slave called `master-build` as `Dumb Slave`
+
+- set the `# of executors` to `1`
+- set `Remote FS root` to `/home/jenkins`
+- set the `Labels` to `update_tarballs prio_build regular_build prio_nongraphics_test regular_nongraphics_test`
+- set `Host` to `localhost`
 
 ### Jenkins plugin installation
 Go to [http://localhost:8080/pluginManager/available](http://localhost:8080/pluginManager/available) and install the following plugins:
@@ -177,7 +180,9 @@ Using RAM for chroot environment and parallel compression.
 Add the following line to `/etc/fstab`
 
     # pbuilder
-    tmpfs   /var/cache/pbuilder/build   tmpfs   defaults,size=32000M    0   0
+    tmpfs   /var/cache/pbuilder/build   tmpfs   defaults,size=3200M    0   0
+    
+*(This size should be arround __50%__ of the machines memory)*.
 
 Mount *tmpfs* by entering
 

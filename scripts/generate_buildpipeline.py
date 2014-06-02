@@ -58,7 +58,7 @@ def main():
 
     if len(args) != 0:
         print "Usage: %s [masterURL login password configFolder | jenkinsConfigFile] pipelineReposOwner username" % (sys.argv[0])
-        sys.exit()
+        sys.exit(False)
 
     if options.jenkinsConfigFile:
         # load jenkins config from file
@@ -79,11 +79,11 @@ def main():
 
     else:
         print "Usage: %s [masterURL login password configFolder | jenkinsConfigFolder] pipelineReposOwner username" % (sys.argv[0])
-        sys.exit()
+        sys.exit(False)
 
     if not options.pipeline_repos_owner or not options.username:
         print "Usage: %s [masterURL login password configFolder | jenkinsConfigFolder] pipelineReposOwner username" % (sys.argv[0])
-        sys.exit()
+        sys.exit(False)
 
     # get all existent jobs for user
     existent_user_jobs = []

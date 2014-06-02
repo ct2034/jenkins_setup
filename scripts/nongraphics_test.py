@@ -99,7 +99,7 @@ def main():
         # test wet repositories
         print "Testing the following wet repositories %s" % test_repos_list_wet
         test_list = ' '.join( test_repos_list_wet )
-        common.call( "catkin_make --directory %s/wet test --pkg %s" % (repo_sourcespace, test_list), ros_env_repo)
+        common.call("catkin_make --directory %s/wet test --pkg %s" % (repo_sourcespace, test_list), ros_env_repo)
 
         # clean and copy test xml files
         common.clean_and_copy_test_results(repo_sourcespace + "/wet/build/test_results", workspace + "/test_results") # FIXME: is there a way to let catkin write test results to repo_test_results
@@ -109,6 +109,7 @@ def main():
     if (len(stacks) > 0) and (repo_name in stacks):
         # get list of dependencies to test
         test_repos_list_dry = [build_repo]
+        test_repos_list_dry.append(' ') # Maybe solves the bug: [ rosmake ] WARNING: Skipped command line arguments: ['cob_navigation_testsnavigation_test_skeleton'] because they could not be resolved to a stack name or a package name.
         for dep, depObj in pipe_repos[build_identifier].dependencies.items():
             if depObj.test and dep in stacks:
                 test_repos_list_dry.append(dep)
