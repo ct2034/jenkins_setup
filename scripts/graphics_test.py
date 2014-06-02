@@ -132,15 +132,30 @@ def main():
     # in case we have no tests executed (neither wet nor dry), we'll generate some dummy test result
     common.clean_and_copy_test_results(repo_test_results, workspace + "/test_results")
 
+    ################
+    ### Analysis ###
+    ################
+    time_ana = datetime.datetime.now()
+    print "=====> entering analysis step at", time_ana
+
+    path_video = "$WORKSPACE/videoFiles"
+
+    com_folder = "mkdir -p " + path_video
+    common.call(com_folder)
+
+    com_ana = "roslaunch navigation_test_analysis analyse_remaining_bag_files.launch bagPath:=$BAG_PATH videoPath:=" + path_video + "/"
+    common.call(com_ana)
+
     ###########
     ### end ###
     ###########
-    # steps: parsing, test
+    # steps: parsing, test, analysis
     time_finish = datetime.datetime.now()
     print "=====> finished script at", time_finish
     print "durations:"
     print "parsing arguments in       ", (time_test - time_parsing)
-    print "test in                    ", (time_finish - time_test)
+    print "test in                    ", (time_ana - time_test)
+    print "analysis in                ", (time_finish - time_ana)
     print "total                      ", (time_finish - time_parsing)
     print ""
 
