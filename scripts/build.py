@@ -260,7 +260,7 @@ def main():
     if catkin_packages != {}:
         print "Build wet packages: ", catkin_packages.keys()
         try:
-            common.call("catkin_make --directory %s/wet" % repo_sourcespace, ros_env_repo)
+            common.call("catkin_make --directory %s/wet -DCATKIN_SKIP_TESTING=1" % repo_sourcespace, ros_env_repo)
         except common.BuildException as ex:
             print ex.msg
             raise common.BuildException("Failed to catkin_make wet repositories")
