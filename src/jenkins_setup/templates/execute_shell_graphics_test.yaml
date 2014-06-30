@@ -63,7 +63,7 @@ JOBTYPE=@(JOB_TYPE_NAME)
 
 export BUILD_ID=$BUILD_ID
 
-export BAGPATH=$bagPath
+export BAG_PATH=$bagPath
 
 DELIM
 
