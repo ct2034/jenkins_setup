@@ -37,6 +37,10 @@ case $JOBTYPE in
         fi
 
         $DIR/remoteX.py start
+        if [ $? != 0 ]; then
+            echo "Could not start remote X server"
+            exit 1
+        fi
         export DISPLAY=`cat /tmp/vncDisplay`
         echo "Using Display $DISPLAY. Start vncviewer to see the X environment: vncviewer $HOSTNAME$DISPLAY"
         ;;

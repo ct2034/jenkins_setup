@@ -14,7 +14,7 @@ case "`dpkg --print-architecture`" in
 esac
 
 # Install turbovnc dependencies
-sudo apt-get install -y xauth xfonts-base
+sudo apt-get install -y --force-yes xauth xfonts-base
 
 # Install the package
 sudo dpkg -i $pkg
