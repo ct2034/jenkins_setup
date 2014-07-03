@@ -89,7 +89,7 @@ def main():
         for pkg_name, pkg_dir in catkin_test_packages.items():
             test_repos_list_wet.append(pkg_name)
 
-        # add all oackages in dep repositories (if "test" is set to True)
+        # add all packages in dep repositories (if "test" is set to True)
         for dep in pipe_repos[build_identifier].dependencies.keys():
             if pipe_repos[build_identifier].dependencies[dep].test:
                 (catkin_test_dep_packages, stacks, manifest_packages) = common.get_all_packages(catkin_packages[dep] + '/..')
@@ -97,9 +97,15 @@ def main():
                     test_repos_list_wet.append(pkg_name)
 
         print "Testing the following wet repositorie %s" % build_repo#test_repos_list_wet
+		print "SOME PACKAGE LISTS:"
+		print "test_repos_list_wet: %s" % test_repos_list_wet
+		print "build_repo: %s" % build_repo
+		print "test_list: %s" % test_list
+		print "ros_env_repo: %s" % ros_env_repo
+		print "repo_sourcespace: %s" % repo_sourcespace
         try:
             test_list = ' '.join( test_repos_list_wet )
-            common.call( "catkin_make -DCATKIN_SKIP_TESTING=0 --directory %s/wet run_tests_%s" % (repo_sourcespace, build_repo))
+            common.call("catkin_make --directory %s/wet run_tests_%s" % (repo_sourcespace, build_repo))
         except common.BuildException as ex:
             print ex.msg
             raise common.BuildException("Failed to catkin_make test wet repositories")
