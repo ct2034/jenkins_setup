@@ -97,12 +97,12 @@ def main():
                     test_repos_list_wet.append(pkg_name)
 
         print "Testing the following wet repositorie %s" % build_repo#test_repos_list_wet
-		print "SOME PACKAGE LISTS:"
-		print "test_repos_list_wet: %s" % test_repos_list_wet
-		print "build_repo: %s" % build_repo
-		print "test_list: %s" % test_list
-		print "ros_env_repo: %s" % ros_env_repo
-		print "repo_sourcespace: %s" % repo_sourcespace
+        print "SOME PACKAGE LISTS:"
+        print "test_repos_list_wet: %s" % test_repos_list_wet
+        print "build_repo: %s" % build_repo
+        print "test_list: %s" % test_list
+        print "ros_env_repo: %s" % ros_env_repo
+        print "repo_sourcespace: %s" % repo_sourcespace
         try:
             test_list = ' '.join( test_repos_list_wet )
             common.call("catkin_make --directory %s/wet run_tests_%s" % (repo_sourcespace, build_repo))
