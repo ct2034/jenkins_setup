@@ -100,11 +100,11 @@ def main():
         print "SOME PACKAGE LISTS:"
         print "test_repos_list_wet: %s" % test_repos_list_wet
         print "build_repo: %s" % build_repo
-        print "test_list: %s" % test_list
         print "ros_env_repo: %s" % ros_env_repo
         print "repo_sourcespace: %s" % repo_sourcespace
         try:
             test_list = ' '.join( test_repos_list_wet )
+            print "test_list: %s" % test_list
             common.call("catkin_make --directory %s/wet run_tests_%s" % (repo_sourcespace, build_repo))
         except common.BuildException as ex:
             print ex.msg
@@ -164,6 +164,9 @@ def main():
     print "analysis in                ", (time_finish - time_ana)
     print "total                      ", (time_finish - time_parsing)
     print ""
+ 
+    # Trying to fix: Deleting project workspace... Cannot delete workspace: java.io.IOException: Unable to delete 
+    common.call("sudo rm -rf $WORKSPACE/test_results/*")
 
 if __name__ == "__main__":
     # global try

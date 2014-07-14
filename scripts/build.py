@@ -260,7 +260,7 @@ def main():
     if catkin_packages != {}:
         print "Build wet packages: ", catkin_packages.keys()
         try:
-            common.call("catkin_make --directory %s/wet -DCATKIN_SKIP_TESTING=1" % repo_sourcespace, ros_env_repo)
+            common.call("catkin_make --directory %s/wet" % repo_sourcespace, ros_env_repo)
         except common.BuildException as ex:
             print ex.msg
             raise common.BuildException("Failed to catkin_make wet repositories")
@@ -295,6 +295,9 @@ def main():
     print "build in                   ", (time_finish - time_build)
     print "total                      ", (time_finish - time_parsing)
     print ""
+ 
+    # Trying to fix: Deleting project workspace... Cannot delete workspace: java.io.IOException: Unable to delete 
+    common.call("sudo rm -rf $WORKSPACE/test_results/*")
 
 if __name__ == "__main__":
     # global try
