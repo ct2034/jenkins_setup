@@ -5,15 +5,36 @@ import sys
 import os
 import shutil
 import datetime
+import time
 import traceback
 import multiprocessing
+import subprocess
 
 from jenkins_setup import common, rosdep, cob_pipe
 
+class Timeout(Exception):
+    pass
+  
+def run(command, timeout=10):
+    proc = subprocess.Popen(command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    poll_seconds = .250
+    deadline = time.time()+timeout
+    while time.time() < deadline and proc.poll() == None:
+        time.sleep(poll_seconds)
+
+    if proc.poll() == None:
+        proc.terminate()
+        raise Timeout()
+
+    stdout, stderr = proc.communicate()
+    return stdout, stderr, proc.returncode  
+    
 def main():
     #########################
     ### parsing arguments ###
     #########################
+    print "=====> WORKAROUND INSTALLATION ..."
+    common.call("sudo apt-get install -y python-numpy python-scipy python-matplotlib python-pygraphviz python-tk ros-hydro-controller-manage* ros-hydro-joint-* ros-hydro-desktop-full ros-hydro-gazebo-ros-control ros-hydro-ros-control")
     time_parsing = datetime.datetime.now()
     print "=====> entering argument parsing step at", time_parsing
 
@@ -148,9 +169,18 @@ def main():
 
     com_folder = "mkdir -p " + path_video
     common.call(com_folder)
+   
+    try:
+        timeo = 30 #s
+        com_ana = ["roslaunch", "navigation_test_analysis", "analyse_remaining_bag_files.launch", "bagPath:=$BAG_PATH", ("videoPath:=" + path_video + "/")]
+        print run(com_ana, timeout=timeo) # 30 seconds
+    except Timeout:
+        print "Stopping analysis after timeout %d sec" % timeo
+        pass
 
-    com_ana = "roslaunch navigation_test_analysis analyse_remaining_bag_files.launch bagPath:=$BAG_PATH videoPath:=" + path_video + "/"
-    common.call(com_ana)
+    print "=====> making images"
+    com_pix = "rosrun navigation_test_analysis simple_viewer.py AUTO"
+    common.call(com_pix)
 
     ###########
     ### end ###
