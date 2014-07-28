@@ -53,8 +53,7 @@ echo "==============================================="
 
 echo $WORKSPACE"/jenkins_setup/scripts/"${JOBTYPE}".py "$PIPELINE_REPOS_OWNER" "$JENKINS_MASTER" "$JENKINS_USER" "$ROSDISTRO" "$REPOSITORY
 
-#nice -n19 ionice -c2 -n7 
-python $WORKSPACE/jenkins_setup/scripts/${JOBTYPE}.py $PIPELINE_REPOS_OWNER $JENKINS_MASTER $JENKINS_USER $ROSDISTRO $REPOSITORY
+nice -n19 ionice -c2 -n7 python $WORKSPACE/jenkins_setup/scripts/${JOBTYPE}.py $PIPELINE_REPOS_OWNER $JENKINS_MASTER $JENKINS_USER $ROSDISTRO $REPOSITORY
 result=$?
 
 case $JOBTYPE in
