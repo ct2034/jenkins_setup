@@ -99,7 +99,7 @@ def main():
         # test wet repositories
         print "Testing the following wet repositories %s" % test_repos_list_wet
         test_list = ' '.join( test_repos_list_wet )
-        common.call("catkin_make --directory %s/wet test --pkg %s" % (repo_sourcespace, test_list), ros_env_repo)
+        common.call( "catkin_make --directory %s/wet test --pkg %s" % (repo_sourcespace, test_list), ros_env_repo)
 
         # clean and copy test xml files
         common.clean_and_copy_test_results(repo_sourcespace + "/wet/build/test_results", workspace + "/test_results") # FIXME: is there a way to let catkin write test results to repo_test_results
