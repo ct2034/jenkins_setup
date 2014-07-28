@@ -23,6 +23,4 @@ deb $url $dist restricted $pools
 deb $url $dist-updates restricted $pools
 EOF
 
-echo `cat /etc/apt/sources.list`
-
 sudo apt-get update
