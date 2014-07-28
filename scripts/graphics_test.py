@@ -9,6 +9,8 @@ import time
 import traceback
 import multiprocessing
 import subprocess
+import string
+import commands
 
 from jenkins_setup import common, rosdep, cob_pipe
 
@@ -16,8 +18,8 @@ class Timeout(Exception):
     pass
   
 def run(command, timeout=10):
-    proc = subprocess.Popen(command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    poll_seconds = .250
+    proc = subprocess.Popen(command, bufsize=0, shell=True)
+    poll_seconds = 1
     deadline = time.time()+timeout
     while time.time() < deadline and proc.poll() == None:
         time.sleep(poll_seconds)
@@ -29,6 +31,19 @@ def run(command, timeout=10):
     stdout, stderr = proc.communicate()
     return stdout, stderr, proc.returncode  
     
+  
+def analyse():
+    bagfs = string.split(commands.getoutput("ls $BAG_PATH | grep \".bag$\""), "\n")
+    for bagf in bagfs:
+        com_ana = "roslaunch navigation_test_analysis analyse_bag_file.launch filepath:=$BAG_PATH/" + bagf
+        (st, ou) =  commands.getstatusoutput(com_ana)
+        print "Output: " + str(ou)	
+        if st is 0:
+            print "SUCCESSFULLY ANALYZED " + bagf
+        else:
+            raise ValueError('returned value is: ' + str(ou))
+  
+      
 def main():
     #########################
     ### parsing arguments ###
@@ -170,13 +185,10 @@ def main():
     com_folder = "mkdir -p " + path_video
     common.call(com_folder)
    
-    try:
-        timeo = 30 #s
-        com_ana = ["roslaunch", "navigation_test_analysis", "analyse_remaining_bag_files.launch", "bagPath:=$BAG_PATH", ("videoPath:=" + path_video + "/")]
-        print run(com_ana, timeout=timeo) # 30 seconds
-    except Timeout:
-        print "Stopping analysis after timeout %d sec" % timeo
-        pass
+    print "Files in $BAG_PATH:"
+    print common.call(os.path.expandvars("ls -al $BAG_PATH"))
+   
+    analyse()
 
     print "=====> making images"
     com_pix = "rosrun navigation_test_analysis simple_viewer.py AUTO"
