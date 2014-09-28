@@ -132,12 +132,7 @@ def main():
                 for pkg_name, pkg_dir in catkin_test_dep_packages.items():
                     test_repos_list_wet.append(pkg_name)
 
-        print "Testing the following wet repositorie %s" % build_repo#test_repos_list_wet
-        print "SOME PACKAGE LISTS:"
-        print "test_repos_list_wet: %s" % test_repos_list_wet
-        print "build_repo: %s" % build_repo
-        print "ros_env_repo: %s" % ros_env_repo
-        print "repo_sourcespace: %s" % repo_sourcespace
+        print "Testing the following wet repositorie %s" % build_repo
         try:
             test_list = ' '.join( test_repos_list_wet )
             print "test_list: %s" % test_list

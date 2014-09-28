@@ -109,7 +109,7 @@ def main():
     if (len(stacks) > 0) and (repo_name in stacks):
         # get list of dependencies to test
         test_repos_list_dry = [build_repo]
-        test_repos_list_dry.append(' ') # Maybe solves the bug: [ rosmake ] WARNING: Skipped command line arguments: ['cob_navigation_testsnavigation_test_skeleton'] because they could not be resolved to a stack name or a package name.
+        test_repos_list_dry.append(' ') # Solves the bug: [ rosmake ] WARNING: Skipped command line arguments: ['cob_navigation_testsnavigation_test_skeleton'] because they could not be resolved to a stack name or a package name.
         for dep, depObj in pipe_repos[build_identifier].dependencies.items():
             if depObj.test and dep in stacks:
                 test_repos_list_dry.append(dep)
